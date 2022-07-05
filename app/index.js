@@ -1,6 +1,10 @@
-require('dotenv').config()
-const { Sequelize, Model, DataTypes } = require('sequelize')
 const express = require('express')
+const cors = require('cors');
+const { Sequelize, Model, DataTypes } = require('sequelize')
+require('dotenv').config()
+
+const blogsRouter = require('./routes/blogs')
+
 const app = express()
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
@@ -12,34 +16,10 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
   },
 })
 
-class Note extends Model {}
-Note.init({
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
-  content: {
-    type: DataTypes.TEXT,
-    allowNull: false
-  },
-  important: {
-    type: DataTypes.BOOLEAN
-  },
-  date: {
-    type: DataTypes.DATE
-  }
-}, {
-  sequelize,
-  underscored: true,
-  timestamps: false,
-  modelName: 'note'
-})
+app.use(cors())
+app.use(express.json())
+app.use('/blogs', blogsRouter)
 
-app.get('/api/notes', async (req, res) => {
-  const notes = await Note.findAll()
-  res.json(notes)
-})
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
