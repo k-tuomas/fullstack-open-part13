@@ -1,4 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAbWFpbC5jb20iLCJpZCI6MSwiaWF0IjoxNjU3MTk1NDUwfQ.33cYGzGxC2LnAeym392om_qVEunNgAqIOFmY_s12gmQ
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAbWFpbC5jb20iLCJpZCI6MSwiaWF0IjoxNjU3NTA3ODE4fQ.1xCl4uEcCa9GeTetl9a58xKBDo_0hbWxWTEjT6eyXMk
 
 GET http://localhost:3001/api/blogs
 
@@ -11,9 +11,10 @@ content-type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "author": "test POST",
+  "author": "test year3",
   "url": "test.url.fi",
-  "title": "Test POST command"
+  "title": "test 123",
+  "year": 2022
 }
 
 ####
@@ -28,27 +29,29 @@ content-type: application/json
   "likes": 2
 }
 
-#### USERS 
+#### USERS ##################################
 POST http://localhost:3001/api/users
 content-type: application/json
 
 {
-  "username": "notEmail",
-  "name": "tester test"
+  "username": "test2@mail.com",
+  "name": "tester2 test2"
 }
-
 ####
-PUT http://localhost:3001/api/users/test12@mail.com
+PUT http://localhost:3001/api/users/test@mail.com
 content-type: application/json
 
 {
-  "username": "test@mail.com"
+  "username": "testt@mail.com"
 }
-
 ####
 GET http://localhost:3001/api/users/
+####
+GET http://localhost:3001/api/users/1
+####
+GET http://localhost:3001/api/users/1?read=true
 
-### LOGIN
+#### LOGIN ##################################
 POST http://localhost:3001/api/login/
 content-type: application/json
 
@@ -56,6 +59,32 @@ content-type: application/json
   "username": "test@mail.com",
   "password": "secret"
 }
+####
+DELETE http://localhost:3001/api/logout
+content-type: application/json
+Authorization: Bearer {{token}}
 
-#### AUTHORS
+
+#### AUTHORS ##################################
 GET http://localhost:3001/api/authors
+
+#### READING LIST #############################
+GET http://localhost:3001/api/readinglists
+
+####
+POST http://localhost:3001/api/readinglists
+content-type: application/json
+
+{
+  "blogId": 1,
+  "userId": 1
+}
+
+####
+PUT http://localhost:3001/api/readinglists/1
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "read": true
+}
